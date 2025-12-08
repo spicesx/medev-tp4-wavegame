@@ -15,67 +15,43 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author bachirmasroua
  */
+
+
 public class JoueurTest {
-    
-    public JoueurTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
-    }
+    public static void main(String[] args) {
+        System.out.println("--- Démarrage des tests Joueur ---");
 
-    /**
-     * Test of getNom method, of class Joueur.
-     */
-    @Test
-    public void testGetNom() {
-        System.out.println("getNom");
-        Joueur instance = null;
-        String expResult = "";
-        String result = instance.getNom();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        // 1. Test Creation
+        Joueur j1 = new Joueur("Alice", false); // Blanc
+        Joueur j2 = new Joueur("Bob", true);    // Noir
 
-    /**
-     * Test of isNoir method, of class Joueur.
-     */
-    @Test
-    public void testIsNoir() {
-        System.out.println("isNoir");
-        Joueur instance = null;
-        boolean expResult = false;
-        boolean result = instance.isNoir();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        if (j1.getNom().equals("Alice") && j1.isNoir() == false) {
+            System.out.println("Test 1 (Création Blanc): OK");
+        } else {
+            System.out.println("Test 1: FAIL");
+        }
 
-    /**
-     * Test of toString method, of class Joueur.
-     */
-    @Test
-    public void testToString() {
-        System.out.println("toString");
-        Joueur instance = null;
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (j2.getNom().equals("Bob") && j2.isNoir() == true) {
+            System.out.println("Test 2 (Création Noir): OK");
+        } else {
+            System.out.println("Test 2: FAIL");
+        }
+
+        // 2. Test Display (toString)
+        String affichage = j2.toString();
+        if (affichage.equals("Bob [Noir]")) {
+             System.out.println("Test 3 (Affichage): OK");
+        } else {
+             System.out.println("Test 3: FAIL -> " + affichage);
+        }
+
+        // 3. Test Serializable (Simulation)
+        if (j1 instanceof java.io.Serializable) {
+            System.out.println("Test 4 (Prêt pour sauvegarde): OK");
+        } else {
+            System.out.println("Test 4: FAIL");
+        }
+        
+        System.out.println("--- Fin des tests ---");
     }
-    
 }
