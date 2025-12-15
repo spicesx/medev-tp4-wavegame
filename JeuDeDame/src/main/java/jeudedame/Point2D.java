@@ -1,72 +1,156 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package jeudedame;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.Serializable;
+import java.util.Objects;
 
-public class Point2DTest {
+/**
+ * Abscisse x et ordonnée y d'un point dans un plan cartésien
+ * @author vdufo
+ */
+public class Point2D implements Serializable {
 
-    @Test
-    public void testConstructeursEtGetters() {
-        Point2D p1 = new Point2D(1, 2);
-        assertEquals(1, p1.getX());
-        assertEquals(2, p1.getY());
+    /**
+     * Abscisse x
+     */
+    public int x;
 
-        Point2D p2 = new Point2D();
-        assertEquals(0, p2.getX());
-        assertEquals(0, p2.getY());
+    /**
+     * Ordonnée y
+     */
+    public int y;  
 
-        Point2D p3 = new Point2D(p1);
-        assertEquals(1, p3.getX());
-        assertEquals(2, p3.getY());
+    // Constructeurs et Méthodes
+    /**
+     * Constructeur d'un point à partir de x et y
+     * @param x
+     * @param y
+     */
+    public Point2D(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+    
+    /**
+     * Constructeur d'un point à partir d'un autre point
+     * @param p
+     */
+    public Point2D(Point2D p){
+        this.x = p.x;
+        this.y = p.y;
+    }
+    
+    /**
+     * Constructeur par défaut d'un point
+     */
+    public Point2D(){
+        this.x = 0;
+        this.y = 0;
+    }
+    
+    /**
+     * Setter x
+     * @param x
+     */
+    public void setX(int x){
+        this.x = x;
+    }
+    
+    /**
+     * Setter y
+     * @param y
+     */
+    public void setY(int y){
+        this.y = y;
+    }
+    
+    /**
+     * Getter x
+     * @return
+     */
+    public int getX(){
+        return this.x;
+    }
+    
+    /**
+     * Getter y 
+     * @return
+     */
+    public int getY(){
+        return this.y;
+    }
+    
+    /**
+     * * @param a
+     * @param b
+     */
+    public void setPosition(int a, int b){
+        x = a;
+        y = b;
+    }
+    
+    /**
+     * Méthode qui déplace un point de x et y vers x+dx et y+dy
+     * @param dx
+     * @param dy
+     */
+    public void translate(int dx, int dy){
+        x += dx;
+        y += dy;
+    }
+    
+    /**
+     * Méthode standard pour vérifier l'égalité entre deux objets.
+     * Corrige l'erreur Sonar "Override Object.equals".
+     * @param obj L'objet à comparer
+     * @return true si les coordonnées sont identiques
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Point2D other = (Point2D) obj;
+        return this.x == other.x && this.y == other.y;
     }
 
-    @Test
-    public void testSetters() {
-        Point2D p = new Point2D(0, 0);
-        p.setX(5);
-        p.setY(10);
-        assertEquals(5, p.getX());
-        assertEquals(10, p.getY());
-        
-        p.setPosition(3, 4);
-        assertEquals(3, p.getX());
-        assertEquals(4, p.getY());
+    /**
+     * Nécessaire quand on surcharge equals.
+     * @return le hashcode du point
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 
-    @Test
-    public void testTranslate() {
-        Point2D p = new Point2D(1, 1);
-        p.translate(2, 3);
-        assertEquals(3, p.getX());
-        assertEquals(4, p.getY());
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String toString(){
+        return "[" + x + ";" + y + "]";
     }
-
-    @Test
-    public void testDistance() {
-        Point2D p1 = new Point2D(0, 0);
-        Point2D p2 = new Point2D(3, 4);
-        assertEquals(5.0, p1.distance(p2), 0.0001);
-        assertEquals(-1, p1.distance(null));
-    }
-
-    @Test
-    public void testEqualsAndHashCode() {
-        Point2D p1 = new Point2D(1, 1);
-        Point2D p2 = new Point2D(1, 1);
-        Point2D p3 = new Point2D(2, 2);
-
-        assertEquals(p1, p1); // Same object
-        assertEquals(p1, p2); // Same values
-        assertNotEquals(p1, p3); // Different values
-        assertNotEquals(p1, null);
-        assertNotEquals(p1, "NotAPoint");
-        
-        assertEquals(p1.hashCode(), p2.hashCode());
-    }
-
-    @Test
-    public void testToString() {
-        Point2D p = new Point2D(5, 7);
-        assertEquals("[5;7]", p.toString());
-    }
+    
+    
+    /**
+     * Calcule la distance entre 2 points.
+     * Corrige l'erreur Sonar sur le cast double.
+     * @param p
+     * @return
+     */
+    public double distance(Point2D p){
+        if (p == null) {
+            return -1;
+        } else {
+            // Conversion explicite en double pour éviter le calcul entier avant la puissance
+            return Math.sqrt(Math.pow((double)this.x - p.x, 2) + Math.pow((double)p.y - this.y, 2));
+        }
+    } 
 }
