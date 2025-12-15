@@ -5,6 +5,7 @@
 package jeudedame;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Abscisse x et ordonnée y d'un point dans un plan cartésien
@@ -83,8 +84,7 @@ public class Point2D implements Serializable {
     }
     
     /**
-     * 
-     * @param a
+     * * @param a
      * @param b
      */
     public void setPosition(int a, int b){
@@ -103,38 +103,54 @@ public class Point2D implements Serializable {
     }
     
     /**
-     * Méthode qui vérifie si 2 points sont égaux
-     * @param A
-     * @return
+     * Méthode standard pour vérifier l'égalité entre deux objets.
+     * Corrige l'erreur Sonar "Override Object.equals".
+     * @param obj L'objet à comparer
+     * @return true si les coordonnées sont identiques
      */
-    public boolean equals(Point2D A){
-        if ((this==null) || (A==null)){
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
-        }   else{
-            return A.getX()== this.getX() && A.getY()==this.getY();
-        }    
+        }
+        Point2D other = (Point2D) obj;
+        return this.x == other.x && this.y == other.y;
     }
+
+    /**
+     * Nécessaire quand on surcharge equals.
+     * @return le hashcode du point
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
+
     /**
      *
      * @return
      */
     @Override
     public String toString(){
-        String aff = "["+x+";"+y+"]";
-        return aff;
+        return "[" + x + ";" + y + "]";
     }
     
     
     /**
-     * Calcule la distance entre 2 points
+     * Calcule la distance entre 2 points.
+     * Corrige l'erreur Sonar sur le cast double.
      * @param p
      * @return
      */
     public double distance(Point2D p){
-        if ((p==null)||(this==null)){
+        if (p == null) {
             return -1;
-        } else{
-            return Math.sqrt(Math.pow((this.x)-p.x,2)+Math.pow((p.y-this.y),2));
+        } else {
+            // Conversion explicite en double pour éviter le calcul entier avant la puissance
+            return Math.sqrt(Math.pow((double)this.x - p.x, 2) + Math.pow((double)p.y - this.y, 2));
         }
         
     } 
