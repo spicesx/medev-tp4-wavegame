@@ -152,6 +152,5 @@ public class Point2D implements Serializable {
             // Conversion explicite en double pour éviter le calcul entier avant la puissance
             return Math.sqrt(Math.pow((double)this.x - p.x, 2) + Math.pow((double)p.y - this.y, 2));
         }
-        
     } 
 }
